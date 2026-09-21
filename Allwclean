@@ -1,0 +1,12 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+#------------------------------------------------------------------------------
+
+src/Allwclean
+
+wclean all applications
+
+wcleanLnIncludeAll src
+wcleanLnIncludeAll applications
+
+#------------------------------------------------------------------------------

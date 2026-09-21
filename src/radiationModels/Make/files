@@ -1,0 +1,19 @@
+# Radiation model
+radiationModels/radiationModel/blastRadiationModel.C
+radiationModels/radiationModel/blastRadiationModelNew.C
+radiationModels/noRadiation/blastNoRadiation.C
+radiationModels/P1/blastP1.C
+radiationModels/fvDOM/blastFvDOM.C
+radiationModels/fvDOM/radiativeIntensityRay/blastRadiativeIntensityRay.C
+radiationModels/fvDOM/blackBodyEmission/blastBlackBodyEmission.C
+
+# Absorption/Emission model
+absorptionEmissionModels/absorptionEmissionModel/blastAbsorptionEmissionModel.C
+absorptionEmissionModels/absorptionEmissionModel/blastAbsorptionEmissionModelNew.C
+absorptionEmissionModels/noAbsorptionEmission/blastNoAbsorptionEmission.C
+absorptionEmissionModels/constantAbsorptionEmission/blastConstantAbsorptionEmission.C
+absorptionEmissionModels/binary/blastBinary.C
+
+radiationODE/radiationODE.C
+
+LIB = $(BLAST_LIBBIN)/libblastRadiationModels

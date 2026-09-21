@@ -1,0 +1,3 @@
+blastFSIFoam.C
+
+EXE = $(BLAST_APPBIN)/blastFSIFoam

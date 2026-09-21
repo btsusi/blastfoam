@@ -1,0 +1,4 @@
+reactingCompressibleSystem/reactingCompressibleSystem.C
+blastReactingFoam.C
+
+EXE = $(BLAST_APPBIN)/blastReactingFoam

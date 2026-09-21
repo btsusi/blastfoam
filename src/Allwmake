@@ -1,0 +1,31 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. "${WM_PROJECT_DIR:?}"/wmake/scripts/AllwmakeParseArguments
+
+#------------------------------------------------------------------------------
+
+wmake $targetType numerics
+wmake $targetType finiteVolume
+wmake $targetType diameterModels
+wmake $targetType thermodynamicModels
+wmake $targetType radiationModels
+wmake $targetType compressibleSystem
+wmake $targetType dynamicMesh
+
+wmake $targetType functionObjects
+
+wmake $targetType errorEstimators
+wmake $targetType dynamicFvMesh
+
+wmake $targetType atmosphereModels
+
+wmake $targetType regionModels
+wmake $targetType solidModels
+
+wmake $targetType levelSet
+
+# -- Optional library for use with solids4foam
+solids4Foam/Allwmake
+
+# -----------------------------------------------------------------------------
+

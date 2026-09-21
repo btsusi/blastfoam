@@ -1,0 +1,91 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      detonatingSolidBlastThermo;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+uTransport
+(
+    constIso
+    constAnIso
+    polynomial
+    exponential
+    tabulatedIso
+    tabulatedAnIso
+);
+
+rTransport
+(
+    constIso
+    constAnIso
+    polynomial
+    exponential
+    tabulatedIso
+    tabulatedAnIso
+);
+
+uThermo
+(
+    eConst
+    hConst
+    ePower
+    ePolynomial
+    eIcoTabulated
+    eTabulated
+    hPower
+    hPolynomial
+    hIcoTabulated
+    hTabulated
+);
+
+rThermo
+(
+    eConst
+    hConst
+    ePower
+    ePolynomial
+    eIcoTabulated
+    eTabulated
+    hPower
+    hPolynomial
+    hIcoTabulated
+    hTabulated
+);
+
+uEquationOfState
+(
+    rhoConst
+);
+
+rEquationOfState
+(
+    rhoConst
+);
+
+specie
+(
+    specieBlast
+);
+codeOptions
+#{
+EXE_INC = \
+    -I$(LIB_SRC)/transportModels/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/thermophysicalProperties/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
+    -I$(BLAST_DIR)/src/numerics/lnInclude \
+    -I$(BLAST_DIR)/src/finiteVolume/lnInclude \
+    -I$(BLAST_DIR)/src/thermodynamicModels/lnInclude
+#};
+
+
+// ************************************************************************* //

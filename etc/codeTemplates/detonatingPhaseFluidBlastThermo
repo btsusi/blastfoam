@@ -1,0 +1,117 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      detonatingPhaseFluidBlastThermo;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+uTransport
+(
+    const
+    sutherland
+    polynomial
+    logPolynomial
+    WLF
+    icoTabulated
+    tabulated
+);
+
+rTransport
+(
+    const
+    sutherland
+    polynomial
+    logPolynomial
+    WLF
+    icoTabulated
+    tabulated
+);
+
+uThermo
+(
+    eConst
+    hConst
+    ePower
+    ePolynomial
+    eIcoTabulated
+    eTabulated
+    hPower
+    hPolynomial
+    hIcoTabulated
+    hTabulated
+    janaf
+);
+
+rThermo
+(
+    eConst
+    hConst
+    ePower
+    ePolynomial
+    eIcoTabulated
+    eTabulated
+    hPower
+    hPolynomial
+    hIcoTabulated
+    hTabulated
+    janaf
+);
+
+uEquationOfState
+(
+    CochranChan
+    Murnaghan
+    BirchMurnaghan2
+    BirchMurnaghan3
+    solidJWL
+    tabulatedEOS
+);
+
+rEquationOfState
+(
+    perfectGas
+    AbelNobel
+    JWLC
+    idealGas
+    stiffenedGas
+    vanderWaals
+    JWL
+    LSZK
+    BKW
+    DoanNickel
+    Tait
+    BWR
+    linearTillotson
+    Tillotson
+    tabulatedEOS
+    VanderWaals
+    PengRobinson
+);
+
+specie
+(
+    specieBlast
+);
+
+codeOptions
+#{
+EXE_INC = \
+    -I$(LIB_SRC)/transportModels/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/thermophysicalProperties/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
+    -I$(BLAST_DIR)/src/numerics/lnInclude \
+    -I$(BLAST_DIR)/src/finiteVolume/lnInclude \
+    -I$(BLAST_DIR)/src/thermodynamicModels/lnInclude
+#};
+
+
+// ************************************************************************* //

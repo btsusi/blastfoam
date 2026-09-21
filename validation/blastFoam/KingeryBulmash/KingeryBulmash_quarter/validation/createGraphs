@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+createEps()
+{
+    echo "creating $1 plot"
+    clx="$3/Centerlinex_overpressureMax_impulseMax_timeOfArrival.xy"
+    cly="$3/Centerliney_overpressureMax_impulseMax_timeOfArrival.xy"
+    clz="$3/Centerlinez_overpressureMax_impulseMax_timeOfArrival.xy"
+    cl="$3/Centerline_overpressureMax_impulseMax_timeOfArrival.xy"
+    gnuplot<<EOF
+
+    set terminal postscript eps enhanced color font 'Helvetica,40' linewidth 2\
+        dl 8.0
+    set output "blastFoam_KB_validation_$8.eps"
+    set xlabel "Radius [m]"
+    set ylabel "$1 [$2]"
+    set grid
+    set key center top
+    set size 2,2
+    set autoscale
+    set xrange [1:10]
+    plot    "$6" using 1:(\$$7) title 'Swisdak (1994)'\
+                with points pt 5 ps 2 lc rgb 'blue',\
+            "$cl" using 1:(\$$4*$5) every 1 title 'blastFoam (xyz)'\
+                with lines lt 1 linewidth 2 lc rgb 'black', \
+            "$clx" using 1:(\$$4*$5) every 1 title 'blastFoam (x)'\
+                with lines dt 2 linewidth 2 lc rgb 'green', \
+            "$cly" using 1:(\$$4*$5) every 1 title 'blastFoam (y)'\
+                with lines dt 3 linewidth 2 lc rgb 'red', \
+            "$clz" using 1:(\$$4*$5) every 1 title 'blastFoam (z)'\
+                with lines dt 4 linewidth 2 lc rgb 'magenta'
+
+EOF
+}
+
+# test if gnuplot exists on the system
+if ! which gnuplot > /dev/null 2>&1
+then
+    echo "gnuplot not found - skipping graph creation" >&2
+    exit 1
+fi
+time=$(foamListTimes -latestTime -processor -case ..)
+BLASTFOAM_DIR="../postProcessing/sampleDict/$time"
+Swisdak="validationData/SwisdakData.csv"
+
+createEps "Maximum Overpressure" "kPa" $BLASTFOAM_DIR 2 0.001 $Swisdak 2 "overpressure"
+createEps "Maximum Impulse" "kPa ms" $BLASTFOAM_DIR 3 1.0 $Swisdak 3 "impulse"
+createEps "Time of arrival" "ms" $BLASTFOAM_DIR 4 1000 $Swisdak 4 "toa"
+
+echo Done

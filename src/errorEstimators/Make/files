@@ -1,0 +1,14 @@
+errorEstimator/errorEstimator.C
+errorEstimator/errorEstimatorNew.C
+
+cellSize/cellSize.C
+fieldValue/fieldValue.C
+densityGradient/densityGradient.C
+delta/delta.C
+scaledDelta/scaledDelta.C
+Lohner/Lohner.C
+multicomponentError/multicomponent.C
+
+fvPatchFields/derived/coupledMaxError/coupledMaxErrorFvPatchScalarField.C
+
+LIB = $(BLAST_LIBBIN)/liberrorEstimate
