@@ -70,6 +70,17 @@ regions
     }
     boxToCell
     {
+        box (.09 -1 -1) (.1 1 1);
+        fieldValues
+        (
+            volScalarFieldValue rho.gas $rho1
+            volScalarFieldValue p $p1
+            volScalarFieldValue T.gas $T1
+            volVectorFieldValue U.gas (-$U1 0 0)
+        );
+    }
+    boxToCell
+    {
         box (0.015 0 0) (0.019 0.05 0.05);
         fieldValues
         (

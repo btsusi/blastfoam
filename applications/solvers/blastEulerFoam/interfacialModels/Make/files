@@ -69,6 +69,7 @@ massTransferModels/massTransferModel/massTransferModel.C
 massTransferModels/massTransferModel/massTransferModelNew.C
 massTransferModels/noMassTransfer/noMassTransfer.C
 massTransferModels/reactingParticleMassTransfer/reactingParticleMassTransfer.C
+massTransferModels/SchnerrSauer/SchnerrSauer.C
 
 aspectRatioModels/aspectRatioModel/aspectRatioModel.C
 aspectRatioModels/aspectRatioModel/aspectRatioModelNew.C
