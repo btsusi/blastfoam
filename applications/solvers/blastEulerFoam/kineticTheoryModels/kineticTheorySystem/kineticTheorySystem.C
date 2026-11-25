@@ -753,11 +753,12 @@ void Foam::kineticTheorySystem::correct()
 
     if (ThetapPtr_.valid())
     {
+        // Volume fraction weighted average, starting from the first phase
         volScalarField sumAlpha(ktPhases_[0]);
         volScalarField& Thetap = ThetapPtr_();
-        Thetap = Thetas_[0];
+        Thetap = sumAlpha*Thetas_[0];
 
-        for (label phasei = 0; phasei < ktPhases_.size(); phasei++)
+        for (label phasei = 1; phasei < ktPhases_.size(); phasei++)
         {
             const phaseModel& phase = ktPhases_[phasei];
             const volScalarField& alpha = phase;

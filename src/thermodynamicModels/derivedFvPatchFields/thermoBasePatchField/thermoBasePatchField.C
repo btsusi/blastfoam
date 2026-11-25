@@ -78,6 +78,28 @@ Foam::thermoBasePatchField::thermoBasePatchField
     phaseName_(dict.lookupOrDefault<word>("phase", iF.group()))
 {}
 
+
+Foam::thermoBasePatchField::thermoBasePatchField
+(
+    const fvPatch& p,
+    const word& phaseName
+)
+:
+    patch_(p),
+    phaseName_(phaseName)
+{}
+
+
+Foam::thermoBasePatchField::thermoBasePatchField
+(
+    const fvPatch& p,
+    const thermoBasePatchField& tbpf
+)
+:
+    patch_(p),
+    phaseName_(tbpf.phaseName_)
+{}
+
 // * * * * * * * * * * * * * * * * Destructor  * * * * * * * * * * * * * * * //
 
 Foam::thermoBasePatchField::~thermoBasePatchField()

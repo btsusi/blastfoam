@@ -612,6 +612,55 @@ void correctBoundaries(fvMesh& mesh)
     }
 }
 
+
+//- Restore fields to the copies stored (as <field>.orig) when first set
+template<class GeoField>
+void restoreFields(fvMesh& mesh)
+{
+    HashTable<GeoField*> flds(mesh.lookupClass<GeoField>());
+
+    forAllIter(typename HashTable<GeoField*>, flds, iter)
+    {
+        GeoField& fld = *iter();
+        const word origName(IOobject::groupName(fld.name(), "orig"));
+        if (!mesh.foundObject<GeoField>(origName))
+        {
+            continue;
+        }
+        const GeoField& orig = mesh.lookupObject<GeoField>(origName);
+
+        fld.primitiveFieldRef() = orig.primitiveField();
+        forAll(fld.boundaryField(), patchi)
+        {
+            fld.boundaryFieldRef()[patchi] == orig.boundaryField()[patchi];
+        }
+    }
+}
+
+
+//- Restore all set fields so values from previous passes (e.g. backup
+//  regions) do not persist
+void restoreAllFields(fvMesh& mesh)
+{
+    restoreFields<volScalarField>(mesh);
+    restoreFields<volVectorField>(mesh);
+    restoreFields<volSymmTensorField>(mesh);
+    restoreFields<volSphericalTensorField>(mesh);
+    restoreFields<volTensorField>(mesh);
+
+    restoreFields<surfaceScalarField>(mesh);
+    restoreFields<surfaceVectorField>(mesh);
+    restoreFields<surfaceSymmTensorField>(mesh);
+    restoreFields<surfaceSphericalTensorField>(mesh);
+    restoreFields<surfaceTensorField>(mesh);
+
+    restoreFields<pointScalarField>(mesh);
+    restoreFields<pointVectorField>(mesh);
+    restoreFields<pointSymmTensorField>(mesh);
+    restoreFields<pointSphericalTensorField>(mesh);
+    restoreFields<pointTensorField>(mesh);
+}
+
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 int main(int argc, char *argv[])
@@ -961,6 +1010,12 @@ int main(int argc, char *argv[])
         }
 
         bool write = !noWrite && (end || debug);
+
+        // Start from the fields as read
+        if (!noFields)
+        {
+            restoreAllFields(mesh);
+        }
 
         // Read default values and set fields
         if (setFieldsDict.found("defaultFieldValues") && !noFields)

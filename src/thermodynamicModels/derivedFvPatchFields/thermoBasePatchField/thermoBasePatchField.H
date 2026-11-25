@@ -100,6 +100,12 @@ public:
             const dictionary&
         );
 
+        //- Construct from patch and phase name
+        thermoBasePatchField(const fvPatch&, const word& phaseName);
+
+        //- Construct from patch, copying the phase name of another
+        thermoBasePatchField(const fvPatch&, const thermoBasePatchField&);
+
 
     // Destructor
 

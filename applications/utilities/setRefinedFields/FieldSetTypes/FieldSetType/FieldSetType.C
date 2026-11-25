@@ -53,6 +53,31 @@ Foam::FieldSetType<Type, Patch, Mesh>::FieldSetType
     write_(write),
     good_(fieldPtr_.valid())
 {
+    // Keep a copy of the field as read, before any values are set. It is
+    // mapped with the mesh, so setRefinedFields can restore it at the start
+    // of each pass (and InitialValue can use it)
+    const word origName(IOobject::groupName(fieldName, "orig"));
+    if (good_ && !mesh_.foundObject<FieldType>(origName))
+    {
+        FieldType* origFieldPtr
+        (
+            new FieldType
+            (
+                IOobject
+                (
+                    origName,
+                    fieldPtr_->instance(),
+                    fieldPtr_->db(),
+                    IOobject::NO_READ,
+                    IOobject::NO_WRITE
+                ),
+                *fieldPtr_,
+                PatchType::calculatedType()
+            )
+        );
+        origFieldPtr->store(origFieldPtr);
+    }
+
     token t;
     while (true)
     {
